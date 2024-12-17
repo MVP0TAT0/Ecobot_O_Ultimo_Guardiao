@@ -1,12 +1,12 @@
 class Robot {
-  float x, y; // Position of the robot
+  float x, y;
 
-  Robot(float x, float y) {
-    this.x = x;
-    this.y = y;
+  Robot(float _x, float _y) {
+    x = _x;
+    y = _y;
   }
 
-  void display() {
+  void desenha() {
 
     // Corpo
     fill(200);
@@ -16,7 +16,7 @@ class Robot {
     fill(50);
     textAlign(CENTER, CENTER);
     textSize(16);
-    text("ECO-BOT", x + 50, y + 145);
+    text("ECOBOT", x + 50, y + 145);
 
     // Cabeça
     fill(180);

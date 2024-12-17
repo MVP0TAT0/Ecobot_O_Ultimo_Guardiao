@@ -7,6 +7,6 @@ void setup() {
 
 void draw() {
   background(220);  
-  robot = new Robot(mouseX, mouseY);
-  robot.display();
+  robot = new Robot(mouseX-50, mouseY-70);
+  robot.desenha();
 }
