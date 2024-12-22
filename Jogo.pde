@@ -1,4 +1,4 @@
-Robot robot;
+Ecobot Ecobot;
 
 //Fases
 int fase = 0;
@@ -70,8 +70,8 @@ void draw() {
 
   case 1:
     background(0);
-    robot = new Robot(50, height-50);
-    robot.desenha();
+    Ecobot = new Ecobot(50, height-50);
+    Ecobot.desenha();
 
     rectMode(CENTER);
     fill(155, 40, 0);
@@ -139,5 +139,11 @@ void mousePressed() {
       mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
       fase = 0;
     }
+  }
+}
+
+void keyPressed() {
+  if (key == 'd'){
+    Ecobot.mover();
   }
 }

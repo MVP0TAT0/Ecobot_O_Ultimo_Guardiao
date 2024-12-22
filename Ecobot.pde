@@ -1,7 +1,7 @@
-class Robot {
+class Ecobot {
   float x, y;
 
-  Robot(float _x, float _y) {
+  Ecobot(float _x, float _y) {
     x = _x;
     y = _y;
   }
