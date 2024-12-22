@@ -14,6 +14,8 @@ int bl = 300;
 
 void setup() {
   size(1000, 1000);
+  Ecobot = new Ecobot(50, height-50);
+  frameRate(60);
 }
 
 void draw() {
@@ -70,8 +72,12 @@ void draw() {
 
   case 1:
     background(0);
-    Ecobot = new Ecobot(50, height-50);
     Ecobot.desenha();
+    Ecobot.mover();
+    Ecobot.salto();
+    Ecobot.cair();
+    Ecobot.topoSalto();
+    Ecobot.aterrar();
 
     rectMode(CENTER);
     fill(155, 40, 0);
@@ -91,7 +97,7 @@ void draw() {
   case 2:
     background(0);
     text("COMO JOGAR", bx, by);
-    
+
     fill(155, 40, 0);
     rect(bx, by-200, bl, ba, 25);
     fill(255);
@@ -110,7 +116,7 @@ void draw() {
 void mousePressed() {
   //Botões Menu principal
   if (fase == 0) {
-    //Encontrar posição do botão "Jogar" - Cálculo feito por ChatGPT
+    //Encontrar posição do botão "Jogar"
     if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
       mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
       fase = 1;
@@ -143,7 +149,27 @@ void mousePressed() {
 }
 
 void keyPressed() {
-  if (key == 'd'){
-    Ecobot.mover();
+  if (key == 'd') {
+    Ecobot.andarDireita=true;
+  }
+
+  if (key == 'a') {
+    Ecobot.andarEsquerda=true;
+  }
+
+  if (key == 'w' && Ecobot.aSaltar==false && Ecobot.aCair==false) {
+    Ecobot.aSaltar=true;
+    Ecobot.ySalto = Ecobot.y - Ecobot.alturaSalto;
+  }
+}
+
+
+void keyReleased() {
+  if (key == 'd') {
+    Ecobot.andarDireita=false;
+  }
+
+  if (key == 'a') {
+    Ecobot.andarEsquerda=false;
   }
 }
