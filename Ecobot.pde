@@ -1,3 +1,6 @@
+//Função de saltar proveniente de: https://www.youtube.com/watch?v=8uCXGcWK4BA
+
+
 class Ecobot {
   float x, y;
 
@@ -10,8 +13,12 @@ class Ecobot {
   boolean andarDireita;
   boolean aSaltar;
   boolean aCair;
+  
+  //Hitbox do Ecobot
+  float left,right,top,bottom;
 
   Ecobot(float _x, float _y) {
+    rectMode(CENTER);
     x = _x;
     y = _y;
 
@@ -22,13 +29,18 @@ class Ecobot {
     vel = 3;
     alturaSalto = 100;
     ySalto = y - alturaSalto;
+    
+    //Hitbox Ecobot
+    left = x - 25/2;
+    right = x + 25/2;
+    top = y - 50/2;
+    bottom = y + 50/2;
   }
 
   void desenha() {
-    rectMode(CENTER);
 
     // Corpo
-    fill(200);
+    fill(255,0,0);
     rect(x, y, 25, 50, 10);
   }
 
@@ -39,9 +51,14 @@ class Ecobot {
     if (andarEsquerda == true) {
       x -= vel;
     }
+    
+    //Atualizar Ecobot
+    left = x - 25/2;
+    right = x + 25/2;
+    top = y - 50/2;
+    bottom = y + 50/2;
   }
 
-  //Função de saltar proveniente de: https://www.youtube.com/watch?v=8uCXGcWK4BA
   void salto() {
     if (aSaltar == true) {
       y -= 5;

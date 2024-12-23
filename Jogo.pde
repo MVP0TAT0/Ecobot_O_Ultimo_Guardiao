@@ -1,5 +1,7 @@
 Ecobot Ecobot;
 
+Plataforma Plat1;
+
 //Fases
 int fase = 0;
 // 0 -> Menu inicial
@@ -14,8 +16,9 @@ int bl = 300;
 
 void setup() {
   size(1000, 1000);
-  Ecobot = new Ecobot(50, height-50);
   frameRate(60);
+  Ecobot = new Ecobot(50, height-50);
+  Plat1 = new Plataforma(width/2-300/2,1000-100,300,20);
 }
 
 void draw() {
@@ -78,6 +81,9 @@ void draw() {
     Ecobot.cair();
     Ecobot.topoSalto();
     Ecobot.aterrar();
+    
+    Plat1.desenha();
+    Plat1.colisao(Ecobot);
 
     rectMode(CENTER);
     fill(155, 40, 0);
