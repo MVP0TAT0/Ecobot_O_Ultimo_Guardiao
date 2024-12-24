@@ -1,6 +1,6 @@
 class Plataforma {
 
-  float x, y, w, h, top_left, top_right, bottom_left, bottom_right;
+  float x, y, w, h, left, right, top, bottom;
 
   Plataforma(float _x, float _y, float _w, float _h) {
     x=_x;
@@ -8,27 +8,29 @@ class Plataforma {
     w=_w;
     h=_h;
 
-    top_left = x;
-    top_right = x + w;
-    bottom_left = y;
-    bottom_right = y + h;
+    //Hitbox da plataforma
+    left = x - w/2;
+    right = x + w/2;
+    top = y - h/2;
+    bottom = y + h/2;
   }
 
   void desenha() {
-    rectMode(CORNER);
-    fill(55,255,0);
+    rectMode(CENTER);
+    fill(55, 255, 0);
     rect(x, y, w, h);
   }
 
   void colisao(Ecobot oEcobot) {
     //Detetar colisão
-    if (top_left < oEcobot.right &&
-      top_right > oEcobot.left &&
-      bottom_left < oEcobot.bottom &&
-      bottom_right > oEcobot.top) {
+    if (left < oEcobot.right &&
+      right > oEcobot.left &&
+      top < oEcobot.bottom &&
+      bottom > oEcobot.top) {
       println("colidindo");
       oEcobot.aCair=false;
-      oEcobot.y = y - h/2 - 17;
+      //puxa o ecobot para cima para nao ficar dentro da plataforma
+      oEcobot.y = y - h/2 - 26;
     } else {
       println("nao colidindo");
     }
