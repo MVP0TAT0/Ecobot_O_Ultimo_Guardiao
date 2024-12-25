@@ -34,9 +34,5 @@ class Plataforma {
     } else {
       println("nao colidindo");
     }
-
-    if (left < oEcobot.right) {
-      Ecobot.andarDireita=false;
-    }
   }
 }
