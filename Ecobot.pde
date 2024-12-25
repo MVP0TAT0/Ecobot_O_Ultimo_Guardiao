@@ -86,24 +86,27 @@ class Ecobot {
   //Verificar se há colisão com qualquer plataformas
   //se não estiver a colidir, o jogador começa a cair
   void cairPlataforma(ArrayList<Plataforma> aListaPlataforma) {
-
-    //Verificar se o Ecobot não está a meio de um salto
-    //e verificar que o jogador não está no chão
-    if (aSaltar == false && y < height-25) {
+    // Verificar se o Ecobot não está a meio de um salto
+    // e verificar que o jogador não está no chão
+    if (!aSaltar && y < height - 25) {
 
       boolean naPlataforma = false;
 
       for (Plataforma aPlataforma : aListaPlataforma) {
-        // se o jogador está a colidir com a plataforma
-        if (top <= aPlataforma.bottom &&
-          bottom >= aPlataforma.top &&
-          left <= aPlataforma.right &&
-          right >= aPlataforma.left) {
-          naPlataforma = true; // naPlataforma fica true
+        // Verificar colisão com o topo da plataforma
+        if (bottom >= aPlataforma.top - 1 &&   // Margem para evitar instabilidade
+          bottom <= aPlataforma.top + 5 &&  // Considera uma pequena margem
+          left < aPlataforma.right &&
+          right > aPlataforma.left) {
+          naPlataforma = true; // Está sobre a plataforma
+          aCair = false;       // Para de cair
+          y = aPlataforma.top - 25; // Ajusta o Ecobot sobre a plataforma
+          break;
         }
       }
-      // se não está numa plataforma, começa a cair
-      if (naPlataforma == false) {
+
+      // Se não está sobre nenhuma plataforma, começa a cair
+      if (!naPlataforma) {
         aCair = true;
       }
     }

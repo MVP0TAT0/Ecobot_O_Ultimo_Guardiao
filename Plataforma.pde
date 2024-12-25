@@ -30,9 +30,13 @@ class Plataforma {
       println("colidindo");
       oEcobot.aCair=false;
       //puxa o ecobot para cima para nao ficar dentro da plataforma
-      oEcobot.y = y - h/2 - 26;
+      //oEcobot.y = y - h/2 - 26;
     } else {
       println("nao colidindo");
+    }
+
+    if (left < oEcobot.right) {
+      Ecobot.andarDireita=false;
     }
   }
 }

@@ -124,7 +124,11 @@ void draw() {
     noStroke();
     background(135, 206, 235);
 
-
+    //// Desenhar nuvens
+    desenharNuvem(150, 200);
+    desenharNuvem(300, 100);
+    desenharNuvem(600, 150);
+    desenharNuvem(850, 250);
 
     //Funções Ecobot
     Ecobot.desenha();
