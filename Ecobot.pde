@@ -15,6 +15,7 @@ class Ecobot {
   float left, right, top, bottom;
 
   Ecobot(float _x, float _y) {
+
     rectMode(CENTER);
     x = _x;
     y = _y;
@@ -28,17 +29,60 @@ class Ecobot {
     ySalto = y - alturaSalto;
 
     //Hitbox Ecobot
-    left = x - 25/2;
-    right = x + 25/2;
-    top = y - 50/2;
-    bottom = y + 50/2;
+    left = x - 45/2;
+    right = x + 45/2;
+    top = y - 68/2;
+    bottom = y + 68/2;
   }
 
+
   void desenha() {
+    float idle = sin(frameCount * 0.05) * 3; // Movimento cíclico
+
+    stroke(0);
+    strokeWeight(1);
+
+    // Pernas
+    fill(140, 140, 140);
+    rectMode(CENTER);
+    rect(x - 10, y + 20, 10, 15);
+    rect(x + 10, y + 20, 10, 15);
+
+    // Pés
+    fill(120, 120, 120);
+    rect(x - 10, y + 30, 10, 6, 3);
+    rect(x + 10, y + 30, 10, 6, 3);
+
+    // Cabeça
+    fill(180, 180, 180);
+    rect(x, y - 30 + idle, 25, 20, 5);
+
+    // Olhos
+    fill(50, 205, 50);
+    ellipse(x - 8, y - 30 + idle, 5, 5);
+    ellipse(x + 8, y - 30 + idle, 5, 5);
+
+    // Braços
+    fill(120, 120, 120);
+    rect(x - 19, y - 2 + idle, 8, 22, 3);
+    rect(x + 19, y - 2 + idle, 8, 22, 3);
+
+    // Ombros
+    fill(140, 140, 140);
+    circle(x - 19, y - 12 + idle, 12);
+    circle(x + 19, y - 12 + idle, 12);
 
     // Corpo
-    fill(255, 0, 0);
-    rect(x, y, 25, 50, 10);
+    fill(160, 160, 160);
+    rect(x, y + idle, 30, 40, 8);
+
+    // Desenhar hitbox (visível)
+    fill(255, 0, 0, 100);
+    strokeWeight(1);
+    rectMode(CORNERS);
+    rect(left, top, right, bottom);
+
+    noStroke();
   }
 
   void mover() {
@@ -50,10 +94,10 @@ class Ecobot {
     }
 
     //Atualizar hitbox do Ecobot
-    left = x - 25/2;
-    right = x + 25/2;
-    top = y - 50/2;
-    bottom = y + 50/2;
+    left = x - 45/2;
+    right = x + 45/2;
+    top = y - 68/2;
+    bottom = y + 68/2;
   }
 
   void salto() {
@@ -76,10 +120,11 @@ class Ecobot {
     }
   }
 
+  //aterrar no chao
   void aterrar() {
-    if (y >= height - 50/2) {
+    if (y >= height - 68/2) {
       aCair=false;
-      y = height - 50/2;
+      y = height - 68/2;
     }
   }
 
@@ -88,7 +133,7 @@ class Ecobot {
   void cairPlataforma(ArrayList<Plataforma> aListaPlataforma) {
     // Verificar se o Ecobot não está a meio de um salto
     // e verificar que o jogador não está no chão
-    if (!aSaltar && y < height - 25) {
+    if (!aSaltar && y < height - 68) {
 
       boolean naPlataforma = false;
 
@@ -100,7 +145,7 @@ class Ecobot {
           right > aPlataforma.left) {
           naPlataforma = true; // Está sobre a plataforma
           aCair = false;       // Para de cair
-          y = aPlataforma.top - 25; // Ajusta o Ecobot sobre a plataforma
+          y = aPlataforma.top - 68/2; // Ajusta o Ecobot sobre a plataforma
           break;
         }
       }
