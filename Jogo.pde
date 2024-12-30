@@ -21,7 +21,7 @@ int bl = 300;
 color bColor = color(40, 155, 0);
 
 //Energia
-float energia = 20000;
+float energia = 100;
 
 void setup() {
   size(1000, 1000);

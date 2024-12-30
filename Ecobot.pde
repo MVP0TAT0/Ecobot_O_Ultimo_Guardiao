@@ -38,51 +38,147 @@ class Ecobot {
 
   void desenha() {
     float idle = sin(frameCount * 0.05) * 3; // Movimento cíclico
+    float animPerna1 = sin(frameCount * 0.15) * 3;
+    float animPerna2 = sin(frameCount * 0.15 + PI) * 3;
 
-    stroke(0);
-    strokeWeight(1);
+    if (andarDireita) {
 
-    // Pernas
-    fill(140, 140, 140);
-    rectMode(CENTER);
-    rect(x - 10, y + 20, 10, 15);
-    rect(x + 10, y + 20, 10, 15);
+      stroke(0);
+      strokeWeight(1);
 
-    // Pés
-    fill(120, 120, 120);
-    rect(x - 10, y + 30, 10, 6, 3);
-    rect(x + 10, y + 30, 10, 6, 3);
+      // Pernas
+      fill(140, 140, 140);
+      rectMode(CENTER);
+      rect(x - 10, y + 20 + animPerna1, 10, 15);
+      rect(x + 10, y + 20 + animPerna2, 10, 15);
 
-    // Cabeça
-    fill(180, 180, 180);
-    rect(x, y - 30 + idle, 25, 20, 5);
+      // Pés
+      fill(120, 120, 120);
 
-    // Olhos
-    fill(50, 205, 50);
-    ellipse(x - 8, y - 30 + idle, 5, 5);
-    ellipse(x + 8, y - 30 + idle, 5, 5);
+      rect(x - 10, y + 30 + animPerna1, 10, 6, 3);
+      rect(x + 10, y + 30 + animPerna2, 10, 6, 3);
 
-    // Braços
-    fill(120, 120, 120);
-    rect(x - 19, y - 2 + idle, 8, 22, 3);
-    rect(x + 19, y - 2 + idle, 8, 22, 3);
+      // Cabeça
+      fill(180, 180, 180);
+      rect(x, y - 30 + idle, 25, 20, 5);
 
-    // Ombros
-    fill(140, 140, 140);
-    circle(x - 19, y - 12 + idle, 12);
-    circle(x + 19, y - 12 + idle, 12);
+      // Olhos
+      fill(50, 205, 50);
+      ellipse(x - 6, y - 30 + idle, 5, 5);
+      ellipse(x + 8, y - 30 + idle, 5, 5);
 
-    // Corpo
-    fill(160, 160, 160);
-    rect(x, y + idle, 30, 40, 8);
+      // Braço direito para trás
+      fill(120, 120, 120);
+      rect(x + 19, y - 2 + idle, 8, 22, 3);
 
-    // Desenhar hitbox (visível)
+      // Ombro direito para trás
+      fill(140, 140, 140);
+      circle(x + 19, y - 12 + idle, 12);
+
+      // Corpo
+      fill(160, 160, 160);
+      rect(x, y + idle, 30, 40, 8);
+
+      // Braço esquerdo para a frente
+      fill(120, 120, 120);
+      rect(x - 19, y - 2 + idle, 8, 22, 3);
+
+      //Ombro esquerdo para a frente
+      fill(140, 140, 140);
+      circle(x - 19, y - 12 + idle, 12);
+
+      noStroke();
+    } else if (andarEsquerda) {
+
+      stroke(0);
+      strokeWeight(1);
+
+      // Pernas
+      fill(140, 140, 140);
+      rectMode(CENTER);
+      rect(x - 10, y + 20 + animPerna1, 10, 15);
+      rect(x + 10, y + 20 + animPerna2, 10, 15);
+
+      // Pés
+      fill(120, 120, 120);
+      rect(x - 10, y + 30 + animPerna1, 10, 6, 3);
+      rect(x + 10, y + 30 + animPerna2, 10, 6, 3);
+
+      // Cabeça
+      fill(180, 180, 180);
+      rect(x, y - 30 + idle, 25, 20, 5);
+
+      // Olhos
+      fill(50, 205, 50);
+      ellipse(x - 8, y - 30 + idle, 5, 5);
+      ellipse(x + 6, y - 30 + idle, 5, 5);
+
+      // Braço esquerdo para trás
+      fill(120, 120, 120);
+      rect(x - 19, y - 2 + idle, 8, 22, 3);
+
+      // Ombro esquerdo para trás
+      fill(140, 140, 140);
+      circle(x - 19, y - 12 + idle, 12);
+
+      // Corpo
+      fill(160, 160, 160);
+      rect(x, y + idle, 30, 40, 8);
+
+      // Braço direito para a frente
+      fill(120, 120, 120);
+      rect(x + 19, y - 2 + idle, 8, 22, 3);
+
+      //Ombro direito para a frente
+      fill(140, 140, 140);
+      circle(x + 19, y - 12 + idle, 12);
+
+      noStroke();
+    } else {
+      stroke(0);
+      strokeWeight(1);
+
+      // Pernas
+      fill(140, 140, 140);
+      rectMode(CENTER);
+      rect(x - 10, y + 20, 10, 15);
+      rect(x + 10, y + 20, 10, 15);
+
+      // Pés
+      fill(120, 120, 120);
+      rect(x - 10, y + 30, 10, 6, 3);
+      rect(x + 10, y + 30, 10, 6, 3);
+
+      // Cabeça
+      fill(180, 180, 180);
+      rect(x, y - 30 + idle, 25, 20, 5);
+
+      // Olhos
+      fill(50, 205, 50);
+      ellipse(x - 8, y - 30 + idle, 5, 5);
+      ellipse(x + 8, y - 30 + idle, 5, 5);
+
+      // Braços
+      fill(120, 120, 120);
+      rect(x - 19, y - 2 + idle, 8, 22, 3);
+      rect(x + 19, y - 2 + idle, 8, 22, 3);
+
+      // Ombros
+      fill(140, 140, 140);
+      circle(x - 19, y - 12 + idle, 12);
+      circle(x + 19, y - 12 + idle, 12);
+
+      // Corpo
+      fill(160, 160, 160);
+      rect(x, y + idle, 30, 40, 8);
+
+      noStroke();
+    }
+    // Desenhar hitbox visível
     fill(255, 0, 0, 100);
-    strokeWeight(1);
+    noFill();
     rectMode(CORNERS);
     rect(left, top, right, bottom);
-
-    noStroke();
   }
 
   void mover() {
