@@ -253,3 +253,31 @@ class Ecobot {
     }
   }
 }
+
+
+//Teclas de movimento
+void keyPressed() {
+  if (key == 'd') {
+    Ecobot.andarDireita=true;
+  }
+
+  if (key == 'a') {
+    Ecobot.andarEsquerda=true;
+  }
+
+  if (key == 'w' && Ecobot.aSaltar==false && Ecobot.aCair==false) {
+    Ecobot.aSaltar=true;
+    Ecobot.ySalto = Ecobot.y - Ecobot.alturaSalto;
+  }
+}
+
+
+void keyReleased() {
+  if (key == 'd') {
+    Ecobot.andarDireita=false;
+  }
+
+  if (key == 'a') {
+    Ecobot.andarEsquerda=false;
+  }
+}

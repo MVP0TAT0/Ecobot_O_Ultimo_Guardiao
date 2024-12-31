@@ -1,11 +1,19 @@
 //Funções de movimento e colisão provenientes do canal: https://www.youtube.com/@chriswhitmirelessons220
 
+//Imagem do lixo
+PImage lixoImg;
+PImage lixoPreto;
+PImage lixoCor;
+
 //Classes
 Ecobot Ecobot;
 Plataforma Plat1, Plat2, Plat3;
 
 //Arraylist - Mesma coisa que Array, mas não tem número fixo, pode-se acrescentar e remover
 ArrayList <Plataforma> listaPlataforma;
+
+//Arrays
+Lixo[] lixoArray;
 
 //Fases
 int fase = 0;
@@ -31,201 +39,51 @@ void setup() {
   Ecobot = new Ecobot(50, height-68/2);
 
   //Criar Plataformas
-  Plat1 = new Plataforma(width/2, 900, 300, 20);
-  Plat2 = new Plataforma(width-200, 820, 200, 20);
+  Plat1 = new Plataforma(width-200, 820, 200, 20);
+  Plat2 = new Plataforma(width/2, 900, 300, 20);
   Plat3 = new Plataforma(width/2, height-10, width, 20);
 
   listaPlataforma = new ArrayList<Plataforma>();
   listaPlataforma.add(Plat1);
   listaPlataforma.add(Plat2);
   listaPlataforma.add(Plat3);
+
+  // Criar um array de lixos
+  lixoImg = loadImage("lixo.png");
+  lixoArray = new Lixo[3]; // Exemplo com 3 caixotes
+  lixoArray[0] = new Lixo(width/2, height - 170, lixoImg);
+  lixoArray[1] = new Lixo(200, 950, lixoImg);
+  lixoArray[2] = new Lixo(750, height - 250, lixoImg);
+
+  // Lixo score
+  lixoPreto = loadImage("lixoPreto.png");
+
+  // Lixo preenchido
+  lixoCor = loadImage("lixo.png");
 }
 
 void draw() {
 
-  //Switch para ir mudando de fase (0,1,2,etc)
+  //Switch case para ir mudando de fase (0,1,2,etc)
   switch(fase) {
 
-  case 0: //Menu inicial
+  case 0:
 
-    //Título do jogo
-    background(255);
-    textAlign(CENTER);
-    fill(0);
-    textSize(115);
-    text("EcoBot", width/2, height/2-200);
-    textSize(38);
-    text("O ÚLTIMO GUARDIÃO", width/2, height/2-150);
-
-    //Botão "Jogar"
-    noStroke();
-    rectMode(CENTER);
-    fill(bColor);
-    rect(bx, by+50, bl, ba, 25);
-    fill(255);
-    textSize(40);
-    text("Jogar", bx, by+63);
-
-    //Botão "Como jogar"
-    fill(bColor);
-    rect(bx, by+150, bl, ba, 25);
-    fill(255);
-    textSize(40);
-    text("Como jogar", bx, by+163);
-
-    //Botão "Sair"
-    fill(bColor);
-    rect(bx, by+250, bl, ba, 25);
-    fill(255);
-    textSize(40);
-    text("Sair", bx, by+263);
-
-    //Verificar se o cursor está em cima dos botões para mudar o seu ícone
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2 ||
-      mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2 ||
-      mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
-      cursor(HAND);
-    } else {
-      cursor(ARROW);
-    }
-
-    //Mudar o botão ao dar hover
-    //Botão "Jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
-      stroke(bColor);
-      strokeWeight(3);
-      fill(255);
-      rect(bx, by+50, bl, ba, 25);
-      fill(bColor);
-      textSize(40);
-      text("Jogar", bx, by+63);
-    }
-
-    //Botão "Como jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
-      stroke(bColor);
-      strokeWeight(3);
-      fill(255);
-      rect(bx, by+150, bl, ba, 25);
-      fill(bColor);
-      textSize(40);
-      text("Como jogar", bx, by+163);
-    }
-
-    //Botão "Sair"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
-      stroke(bColor);
-      strokeWeight(3);
-      fill(255);
-      rect(bx, by+250, bl, ba, 25);
-      fill(bColor);
-      textSize(40);
-      text("Sair", bx, by+263);
-    }
+    MenuPrincipal();
 
     break;
 
-  case 1: //Jogo
-    noStroke();
-    background(135, 206, 235);
-    cursor(ARROW);
+  case 1:
 
-    //// Desenhar nuvens
-    desenharNuvem(150, 200);
-    desenharNuvem(300, 100);
-    desenharNuvem(600, 150);
-    desenharNuvem(850, 250);
+    Nivel1();
 
-    //Energia
-    energia();
-
-    //Funções Ecobot
-    Ecobot.desenha();
-    Ecobot.mover();
-    Ecobot.salto();
-    Ecobot.cair();
-    Ecobot.topoSalto();
-    Ecobot.aterrar();
-    Ecobot.cairPlataforma(listaPlataforma);
-
-    //Funções Plataformas
-    for (Plataforma aPlataforma : listaPlataforma) {
-      aPlataforma.desenha();
-      aPlataforma.colisao(Ecobot);
-    }
     break;
 
 
-  case 2: //Menu "Como jogar"
-    noStroke();
-    background(0);
-    text("COMO JOGAR", bx, by);
+  case 2:
 
-    fill(155, 40, 0);
-    rect(bx, by-200, bl, ba, 25);
-    fill(255);
-    textSize(40);
-    text("Voltar", bx, by-186);
+    ComoJogar();
 
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by -200 - ba / 2 && mouseY <= by -200 + ba / 2)
-      cursor(HAND);
-    else
-      cursor(ARROW);
     break;
-  }
-}
-
-void mousePressed() {
-  //Botões Menu principal
-  if (fase == 0) {
-    //Encontrar posição do botão "Jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
-      fase = 1;
-    }
-    //Encontrar posição do botão "Como jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
-      fase = 2;
-    }
-    //Encontrar posição do botão "Sair"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
-      exit();
-    }
-  }
-  //Botões Menu Como jogar
-  if (fase == 2) {
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
-      fase = 0;
-    }
-  }
-}
-
-void keyPressed() {
-  if (key == 'd') {
-    Ecobot.andarDireita=true;
-  }
-
-  if (key == 'a') {
-    Ecobot.andarEsquerda=true;
-  }
-
-  if (key == 'w' && Ecobot.aSaltar==false && Ecobot.aCair==false) {
-    Ecobot.aSaltar=true;
-    Ecobot.ySalto = Ecobot.y - Ecobot.alturaSalto;
-  }
-}
-
-
-void keyReleased() {
-  if (key == 'd') {
-    Ecobot.andarDireita=false;
-  }
-
-  if (key == 'a') {
-    Ecobot.andarEsquerda=false;
   }
 }

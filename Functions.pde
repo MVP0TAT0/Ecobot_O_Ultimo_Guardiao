@@ -37,3 +37,32 @@ void energia() {
   fill(255, 255, 0); // Cor verde
   rect(30, 90, larguraBarra * (energia / 100), alturaBarra); // Parte cheia da barra
 }
+
+
+void mousePressed() {
+  //Botões Menu principal
+  if (fase == 0) {
+    //Encontrar posição do botão "Jogar"
+    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+      mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
+      fase = 1;
+    }
+    //Encontrar posição do botão "Como jogar"
+    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+      mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
+      fase = 2;
+    }
+    //Encontrar posição do botão "Sair"
+    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+      mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
+      exit();
+    }
+  }
+  //Botões Menu Como jogar
+  if (fase == 2) {
+    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+      mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
+      fase = 0;
+    }
+  }
+}
