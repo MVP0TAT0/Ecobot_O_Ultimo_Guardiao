@@ -7,13 +7,15 @@ void desenharNuvem(int x, int y) {
   ellipse(x + 30, y + 10, 50, 30);
 }
 
+int larguraBarra = 300;
+
 void energia() {
-  int larguraBarra = 200;
+
   int alturaBarra = 20;
 
   // Diminuir a energia ao longo do tempo (por exemplo, a cada 60 frames)
   if (energia > 0) {
-    energia -= 0.1; // Diminuir a energia
+    energia -= 0.2; // Diminuir a energia
   }
 
   // Verificar se a energia acabou

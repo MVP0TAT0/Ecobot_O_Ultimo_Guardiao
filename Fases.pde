@@ -1,6 +1,14 @@
-//Menu Principal
+// Variáveis Botões
+int bx = 500;
+int by = 500;
+int ba = 80;
+int bl = 300;
+color bColor = color(40, 155, 0);
+
+// Menu Principal
 void MenuPrincipal() {
-  //Título do jogo
+
+  // Título do jogo
   background(255);
   textAlign(CENTER);
   fill(0);
@@ -9,7 +17,7 @@ void MenuPrincipal() {
   textSize(38);
   text("O ÚLTIMO GUARDIÃO", width/2, height/2-150);
 
-  //Botão "Jogar"
+  // Botão "Jogar"
   noStroke();
   rectMode(CENTER);
   fill(bColor);
@@ -18,21 +26,21 @@ void MenuPrincipal() {
   textSize(40);
   text("Jogar", bx, by+63);
 
-  //Botão "Como jogar"
+  // Botão "Como jogar"
   fill(bColor);
   rect(bx, by+150, bl, ba, 25);
   fill(255);
   textSize(40);
   text("Como jogar", bx, by+163);
 
-  //Botão "Sair"
+  // Botão "Sair"
   fill(bColor);
   rect(bx, by+250, bl, ba, 25);
   fill(255);
   textSize(40);
   text("Sair", bx, by+263);
 
-  //Verificar se o cursor está em cima dos botões para mudar o seu ícone
+  // Verificar se o cursor está em cima dos botões para mudar o seu ícone
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2 ||
     mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2 ||
     mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
@@ -41,8 +49,8 @@ void MenuPrincipal() {
     cursor(ARROW);
   }
 
-  //Mudar o botão ao dar hover
-  //Botão "Jogar"
+  // Mudar o botão ao dar hover
+  // Botão "Jogar"
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
     stroke(bColor);
     strokeWeight(3);
@@ -53,7 +61,7 @@ void MenuPrincipal() {
     text("Jogar", bx, by+63);
   }
 
-  //Botão "Como jogar"
+  // Botão "Como jogar"
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
     stroke(bColor);
     strokeWeight(3);
@@ -64,7 +72,7 @@ void MenuPrincipal() {
     text("Como jogar", bx, by+163);
   }
 
-  //Botão "Sair"
+  // Botão "Sair"
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
     stroke(bColor);
     strokeWeight(3);
@@ -78,8 +86,8 @@ void MenuPrincipal() {
 
 
 
-//Jogo
-//Nível 1
+// Jogo
+// Nível 1
 
 boolean[] lixoColecionado = {false, false, false}; // Global, fora de qualquer função
 
@@ -105,17 +113,17 @@ void Nivel1() {
   Ecobot.cair();
   Ecobot.topoSalto();
   Ecobot.aterrar();
-  Ecobot.cairPlataforma(listaPlataforma);
+  Ecobot.cairPlataforma(plataformaArray);
 
   // Desenhar e verificar colisões com os lixos
   for (int i = 0; i < 3; i++) {
-    if (lixoArray[i] != null) { // Verificar se o caixote ainda existe
-      lixoArray[i].desenhaLixo();
+    if (lixoArray[i] != null) { // Verificar se o lixo ainda existe
+      lixoArray[i].desenhaLixo(); // Desenhar o lixo no jogo
 
-      if (lixoArray[i].colisaoLixo(Ecobot)) {
-        lixoArray[i] = null; // Remove o lixo ao detetar colisão
-        lixoColecionado[i] = true; // Marca o lixo como coletado
-        println("Colisão com lixo!");
+      if (lixoArray[i].colisaoLixo(Ecobot)) { // Verificar colisão do Ecobot com o lixo
+        lixoArray[i] = null; // Remover o lixo da tela
+        lixoColecionado[i] = true; // Marca o lixo como coletado no índice correspondente
+        println("Colisão com lixo no índice " + i);
       }
     }
   }
@@ -128,28 +136,45 @@ void Nivel1() {
   // Desenhar as imagens de lixo no canto superior esquerdo
   for (int i = 0; i < 3; i++) {
     if (lixoColecionado[i]) {
-      image(lixoCor, width-210 + i * 40, 110, 33.5, 43.5); // Desenhar a imagem verde do lixo
+      image(lixoCor, width - 210 + i * 40, 110, 33.5, 43.5); // Exibir lixo coletado (verde)
     } else {
-      image(lixoPreto, width-210 + i * 40, 110, 33.5, 43.5); // Desenhar a imagem preta do lixo
+      image(lixoPreto, width - 210 + i * 40, 110, 33.5, 43.5); // Exibir lixo não coletado (preto)
     }
   }
 
+  // Verificar se os lixos todos foram colecionados
+  boolean todosLixos = true;
+
+  for (int i = 0; i < 3; i++) {
+    if (!lixoColecionado[i]) {
+      todosLixos = false;
+      break;
+    }
+  }
+
+  // Mudar de nível se colecionar os 3 lixos
+  if (todosLixos) {
+    fase = 3;
+  }
+
   // Funções Plataformas
-  for (Plataforma aPlataforma : listaPlataforma) {
-    aPlataforma.desenha();
-    aPlataforma.colisao(Ecobot);
+  for (int i = 0; i < n1; i++) {
+    plataformaArray[i].desenha();
+    plataformaArray[i].colisao(Ecobot);
   }
 }
 
 
 
-//Fase 2
+// Nível 2
 void Nivel2() {
+
+  text("Nivel 2!", width/2, height/2);
 }
 
 
 
-//Menu "Como jogar"
+// Menu "Como jogar"
 void ComoJogar() {
 
   noStroke();
