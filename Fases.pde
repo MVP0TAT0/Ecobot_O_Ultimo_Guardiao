@@ -123,6 +123,7 @@ void Nivel1() {
       if (lixoArray[i].colisaoLixo(Ecobot)) { // Verificar colisão do Ecobot com o lixo
         lixoArray[i] = null; // Remover o lixo da tela
         lixoColecionado[i] = true; // Marca o lixo como coletado no índice correspondente
+        energia -= 10;
         println("Colisão com lixo no índice " + i);
       }
     }
@@ -166,10 +167,46 @@ void Nivel1() {
 
 
 
-// Nível 2
-void Nivel2() {
+// Nível 1 - Concluído
+void Nivel1_Concluido() {
+  // Fundo semi-transparente
+  fill(255, 255, 255, 20);
+  rect(width / 2, height / 2, 600, 400, 50);
+  fill(0);
+  textAlign(CENTER);
+  text("Nível 1 concluído!", width / 2, height / 2 - 100);
 
-  text("Nivel 2!", width/2, height/2);
+  // Determinar se o cursor está sobre o botão
+  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+    mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
+
+  // Desenhar o botão
+  if (isHover) {
+    textSize(40);
+    cursor(HAND);
+    stroke(bColor);
+    strokeWeight(3);
+    fill(255);
+    rect(bx, by + 50, bl, ba, 25);
+    fill(bColor);
+    text("Próximo nível", bx, by + 63);
+  } else {
+    textSize(40);
+    cursor(ARROW); // Mudar cursor para "seta"
+    noStroke();
+    fill(bColor); // Cor padrão
+    rect(bx, by + 50, bl, ba, 25);
+    fill(255);
+    text("Próximo nível", bx, by + 63);
+  }
+
+  // Verificar clique no botão
+  if (mousePressed && isHover) {
+    resetNivel1(); // Reiniciar o estado do nível 1
+    fase = 0; // Voltar para o menu inicial
+  }
+  
+  noStroke();
 }
 
 

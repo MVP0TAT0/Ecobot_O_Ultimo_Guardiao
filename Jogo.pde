@@ -23,14 +23,14 @@ int fase = 0;
 // 2 -> Menu "Como jogar"
 
 // Energia
-float energia = 200;
+float energia = 100;
 
 void setup() {
   size(1000, 1000);
   frameRate(60);
 
   // Criar Ecobot
-  Ecobot = new Ecobot(50, height-68/2);
+  Ecobot = new Ecobot(500, height-68/2);
 
   // Criar Plataformas Nível 1
   plataformaArray = new Plataforma [n1];
@@ -81,7 +81,7 @@ void draw() {
 
   case 3:
 
-    Nivel2();
+    Nivel1_Concluido();
 
     break;
   }

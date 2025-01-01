@@ -15,13 +15,15 @@ void energia() {
 
   // Diminuir a energia ao longo do tempo (por exemplo, a cada 60 frames)
   if (energia > 0) {
-    energia -= 0.2; // Diminuir a energia
+    energia -= 0.1; // Diminuir a energia
   }
 
   // Verificar se a energia acabou
   if (energia <= 0) {
     energia = 0;  // Garantir que a energia não fique negativa
-    // Aqui pode adicionar código para finalizar o jogo
+
+    resetNivel1();
+
     println("Jogo perdido!");
     fase = 0;
   }
@@ -38,6 +40,26 @@ void energia() {
   // Barra de energia (com a largura diminuindo conforme a energia)
   fill(255, 255, 0); // Cor verde
   rect(30, 90, larguraBarra * (energia / 100), alturaBarra); // Parte cheia da barra
+}
+
+void resetNivel1 () {
+
+  // Reiniciar o Ecobot
+  Ecobot = new Ecobot(500, height-68/2);
+
+  // Reiniciar o array de lixos
+  lixoArray = new Lixo[3];
+  lixoArray[0] = new Lixo(150, 950, lixoImg);
+  lixoArray[1] = new Lixo(width/2, 760, lixoImg);
+  lixoArray[2] = new Lixo(300, 560, lixoImg);
+
+  // Reiniciar o estado de lixos coletados
+  for (int i = 0; i < lixoColecionado.length; i++) {
+    lixoColecionado[i] = false;
+  }
+
+  // (Opcional) Reiniciar energia ou outras variáveis
+  energia = 100;
 }
 
 
