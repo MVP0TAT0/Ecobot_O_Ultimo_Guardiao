@@ -6,8 +6,8 @@ class Lixo {
   Lixo(float _x, float _y, PImage _imagem) {
     x = _x;
     y = _y;
-    w = 47;  // Tamanho padrão do caixote
-    h = 67;  // Tamanho padrão do caixote
+    w = 47;  
+    h = 67;
     imagem = _imagem;
     imageMode(CENTER);
   }

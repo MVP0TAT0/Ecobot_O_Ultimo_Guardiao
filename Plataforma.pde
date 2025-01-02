@@ -41,7 +41,7 @@ class Plataforma {
       right > oEcobot.left &&
       top < oEcobot.bottom &&
       bottom > oEcobot.top) {
-      println("colidindo");
+      println("a colidir com plataforma");
       oEcobot.aCair=false;
       // Evitar que o Ecobot passe para dentro da plataforma
       oEcobot.y = top - 68/2; // Ajustar a posição para ficar na parte superior da plataforma

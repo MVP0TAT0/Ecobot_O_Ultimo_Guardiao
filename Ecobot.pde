@@ -1,7 +1,7 @@
 class Ecobot {
   float x, y;
 
-  int vel;            //Velocidade do movimento
+  float vel;            //Velocidade do movimento
 
   int alturaSalto;    //Distância do salto
   float ySalto;       //Valor y do topo da distância do salto
@@ -182,10 +182,10 @@ class Ecobot {
   }
 
   void mover() {
-    if (andarDireita == true) {
+    if (andarDireita == true && x + 45 / 2 < width) {
       x += vel;
     }
-    if (andarEsquerda == true) {
+    if (andarEsquerda == true && x -45 / 2 > 0) {
       x -= vel;
     }
 
@@ -195,6 +195,8 @@ class Ecobot {
     top = y - 68/2;
     bottom = y + 68/2;
   }
+  
+  
 
   void salto() {
     if (aSaltar == true) {

@@ -89,7 +89,10 @@ void MenuPrincipal() {
 // Jogo
 // Nível 1
 
-boolean[] lixoColecionado = {false, false, false}; // Global, fora de qualquer função
+boolean[] lixoColecionado = {false, false, false};
+float efeitoOverdriveTempo = 0;
+boolean efeitoOverdriveAtivo = false;
+
 
 void Nivel1() {
 
@@ -99,9 +102,11 @@ void Nivel1() {
 
   // Desenhar nuvens
   desenharNuvem(150, 200);
-  desenharNuvem(300, 100);
+  desenharNuvem(300, 70);
   desenharNuvem(600, 150);
   desenharNuvem(850, 250);
+  desenharNuvem(380, 180);
+  desenharNuvem(900, 50);
 
   // Energia
   energia();
@@ -113,15 +118,16 @@ void Nivel1() {
   Ecobot.cair();
   Ecobot.topoSalto();
   Ecobot.aterrar();
-  Ecobot.cairPlataforma(plataformaArray);
+  Ecobot.cairPlataforma(plataformaArray1);
+
 
   // Desenhar e verificar colisões com os lixos
   for (int i = 0; i < 3; i++) {
-    if (lixoArray[i] != null) { // Verificar se o lixo ainda existe
-      lixoArray[i].desenhaLixo(); // Desenhar o lixo no jogo
+    if (lixoArray1[i] != null) { // Verificar se o lixo ainda existe
+      lixoArray1[i].desenhaLixo(); // Desenhar o lixo no jogo
 
-      if (lixoArray[i].colisaoLixo(Ecobot)) { // Verificar colisão do Ecobot com o lixo
-        lixoArray[i] = null; // Remover o lixo da tela
+      if (lixoArray1[i].colisaoLixo(Ecobot)) { // Verificar colisão do Ecobot com o lixo
+        lixoArray1[i] = null; // Remover o lixo da tela
         lixoColecionado[i] = true; // Marca o lixo como coletado no índice correspondente
         energia -= 10;
         println("Colisão com lixo no índice " + i);
@@ -155,13 +161,15 @@ void Nivel1() {
 
   // Mudar de nível se colecionar os 3 lixos
   if (todosLixos) {
-    fase = 3;
+    fase = 3; //Fase Nivel1_Concluido
+  } else if (energia <= 0) {
+    fase = 4; //Fase Nivel1_Falhado
   }
 
   // Funções Plataformas
   for (int i = 0; i < n1; i++) {
-    plataformaArray[i].desenha();
-    plataformaArray[i].colisao(Ecobot);
+    plataformaArray1[i].desenha();
+    plataformaArray1[i].colisao(Ecobot);
   }
 }
 
@@ -203,12 +211,220 @@ void Nivel1_Concluido() {
   // Verificar clique no botão
   if (mousePressed && isHover) {
     resetNivel1(); // Reiniciar o estado do nível 1
-    fase = 0; // Voltar para o menu inicial
+    fase = 5; // Nivel 2
   }
-  
+
   noStroke();
 }
 
+void Nivel1_Falhado() {
+
+  // Fundo
+  fill(255, 255, 255, 20);
+  rect(width / 2, height / 2, 600, 400, 50);
+  fill(0);
+  textAlign(CENTER);
+  text("O Ecobot ficou sem energia!", width / 2, height / 2 - 100);
+
+  // Verificar se o cursor está sobre o botão
+  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+    mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
+
+  // Desenhar o botão
+  if (isHover) {
+    textSize(40);
+    cursor(HAND);
+    stroke(bColor);
+    strokeWeight(3);
+    fill(255);
+    rect(bx, by + 50, bl, ba, 25);
+    fill(bColor);
+    text("Repetir nível", bx, by + 63);
+  } else {
+    textSize(40);
+    cursor(ARROW); // Mudar cursor para "seta"
+    noStroke();
+    fill(bColor); // Cor padrão
+    rect(bx, by + 50, bl, ba, 25);
+    fill(255);
+    text("Repetir nível", bx, by + 63);
+  }
+
+  // Verificar clique no botão
+  if (mousePressed && isHover) {
+    resetNivel1(); // Reiniciar o estado do nível 1
+    fase = 2; // Nivel 1
+  }
+
+  noStroke();
+}
+
+void Nivel2() {
+
+  noStroke();
+  background(135, 206, 235);
+  cursor(ARROW);
+
+  // Desenhar nuvens
+  desenharNuvem(150, 200);
+  desenharNuvem(300, 70);
+  desenharNuvem(600, 150);
+  desenharNuvem(850, 250);
+  desenharNuvem(380, 180);
+  desenharNuvem(900, 50);
+
+  // Energia
+  energia();
+
+  // Funções Ecobot
+  Ecobot.desenha();
+  Ecobot.mover();
+  Ecobot.salto();
+  Ecobot.cair();
+  Ecobot.topoSalto();
+  Ecobot.aterrar();
+  Ecobot.cairPlataforma(plataformaArray2);
+
+  // Overdrive
+  if (Overdrive1 != null) {
+    Overdrive1.desenhaOverdrive();
+    Overdrive1.aplicarEfeito(Ecobot);
+  }
+
+  // Desenhar e verificar colisões com os lixos
+  for (int i = 0; i < 3; i++) {
+    if (lixoArray2[i] != null) { // Verificar se o lixo ainda existe
+      lixoArray2[i].desenhaLixo(); // Desenhar o lixo no jogo
+
+      if (lixoArray2[i].colisaoLixo(Ecobot)) { // Verificar colisão do Ecobot com o lixo
+        lixoArray2[i] = null; // Remover o lixo da tela
+        lixoColecionado[i] = true; // Marca o lixo como coletado no índice correspondente
+        energia -= 10;
+        println("Colisão com lixo no índice " + i);
+      }
+    }
+  }
+
+  // Lixos colecionados
+  textAlign(RIGHT);
+  fill(255);
+  text("Lixo colecionado", width-30, 70);
+
+  // Desenhar as imagens de lixo no canto superior esquerdo
+  for (int i = 0; i < 3; i++) {
+    if (lixoColecionado[i]) {
+      image(lixoCor, width - 210 + i * 40, 110, 33.5, 43.5); // Exibir lixo coletado (verde)
+    } else {
+      image(lixoPreto, width - 210 + i * 40, 110, 33.5, 43.5); // Exibir lixo não coletado (preto)
+    }
+  }
+
+  // Verificar se os lixos todos foram colecionados
+  boolean todosLixos = true;
+
+  for (int i = 0; i < 3; i++) {
+    if (!lixoColecionado[i]) {
+      todosLixos = false;
+      break;
+    }
+  }
+
+  // Mudar de nível se colecionar os 3 lixos
+  if (todosLixos) {
+    fase = 8; //Nivel 3
+  }
+
+  // Funções Plataformas
+  for (int i = 0; i < n2; i++) {
+    plataformaArray2[i].desenha();
+    plataformaArray2[i].colisao(Ecobot);
+  }
+}
+
+// Nivel 2 - Concluído
+void Nivel2_Concluido() {
+
+  // Fundo semi-transparente
+  fill(255, 255, 255, 20);
+  rect(width / 2, height / 2, 600, 400, 50);
+  fill(0);
+  textAlign(CENTER);
+  text("Nível 1 concluído!", width / 2, height / 2 - 100);
+
+  // Determinar se o cursor está sobre o botão
+  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+    mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
+
+  // Desenhar o botão
+  if (isHover) {
+    textSize(40);
+    cursor(HAND);
+    stroke(bColor);
+    strokeWeight(3);
+    fill(255);
+    rect(bx, by + 50, bl, ba, 25);
+    fill(bColor);
+    text("Próximo nível", bx, by + 63);
+  } else {
+    textSize(40);
+    cursor(ARROW); // Mudar cursor para "seta"
+    noStroke();
+    fill(bColor); // Cor padrão
+    rect(bx, by + 50, bl, ba, 25);
+    fill(255);
+    text("Próximo nível", bx, by + 63);
+  }
+
+  // Verificar clique no botão
+  if (mousePressed && isHover) {
+    resetNivel2(); // Reiniciar o estado do nível 1
+    fase = 8; // Nivel 3
+  }
+
+  noStroke();
+}
+
+void Nivel2_Falhado() {
+
+  // Fundo
+  fill(255, 255, 255, 20);
+  rect(width / 2, height / 2, 600, 400, 50);
+  fill(0);
+  textAlign(CENTER);
+  text("O Ecobot ficou sem energia!", width / 2, height / 2 - 100);
+
+  // Verificar se o cursor está sobre o botão
+  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+    mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
+
+  // Desenhar o botão
+  if (isHover) {
+    textSize(40);
+    cursor(HAND);
+    stroke(bColor);
+    strokeWeight(3);
+    fill(255);
+    rect(bx, by + 50, bl, ba, 25);
+    fill(bColor);
+    text("Repetir nível", bx, by + 63);
+  } else {
+    textSize(40);
+    cursor(ARROW); // Mudar cursor para "seta"
+    noStroke();
+    fill(bColor); // Cor padrão
+    rect(bx, by + 50, bl, ba, 25);
+    fill(255);
+    text("Repetir nível", bx, by + 63);
+  }
+
+  // Verificar clique no botão
+  if (mousePressed && isHover) {
+    resetNivel2(); // Reiniciar o estado do nível 2
+    fase = 5; // Nivel 2
+  }
+
+  noStroke();
+}
 
 
 // Menu "Como jogar"
