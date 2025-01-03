@@ -184,9 +184,11 @@ class Ecobot {
   void mover() {
     if (andarDireita == true && x + 45 / 2 < width) {
       x += vel;
+      energia -= 0.15;
     }
     if (andarEsquerda == true && x -45 / 2 > 0) {
       x -= vel;
+      energia -= 0.15;
     }
 
     //Atualizar hitbox do Ecobot
@@ -195,12 +197,13 @@ class Ecobot {
     top = y - 68/2;
     bottom = y + 68/2;
   }
-  
-  
+
+
 
   void salto() {
     if (aSaltar == true) {
       y -= 5;
+      energia -= 0.35;
     }
   }
 

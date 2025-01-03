@@ -8,23 +8,14 @@ void desenharNuvem(float x, float y) {
 }
 
 int larguraBarra = 300;
-boolean energiaFreeze;
-
-float energiaAtual() {
-  return energia;
-}
 
 void energia() {
 
   int alturaBarra = 20;
 
-  // Diminuir a energia ao longo do tempo
-  if (energiaFreeze == false) {
-    if (energia > 0) {
-      energia -= 0.125; // Diminuir a energia
-    }
-  } else {
-    energia = energiaAtual();
+  // Impedir que o Ecobot ganhe mais energia do que o máximo
+  if (energia > 100) {
+    energia = 100;
   }
 
   // Verificar se a energia acabou
@@ -60,15 +51,20 @@ void resetNivel1 () {
 
   // Reiniciar o array de lixos
   lixoArray1 = new Lixo[3];
-  lixoArray1[0] = new Lixo(150, 950, lixoImg);
-  lixoArray1[1] = new Lixo(width/2, 760, lixoImg);
-  lixoArray1[2] = new Lixo(300, 560, lixoImg);
-
+  lixoArray1[0] = new Lixo(500, 760, lixoImg);
+  lixoArray1[1] = new Lixo(880, 660, lixoImg);
+  lixoArray1[2] = new Lixo(100, 560, lixoImg);
 
   // Reiniciar o estado dos lixos
   for (int i = 0; i < lixoColecionado.length; i++) {
     lixoColecionado[i] = false;
   }
+
+  // Reiniciar bolas de energia nível
+  bolaEnergiaArray1 = new BolaEnergia [e1];
+  bolaEnergiaArray1[0] = new BolaEnergia(660, 700);
+  bolaEnergiaArray1[1] = new BolaEnergia(660, 500);
+  bolaEnergiaArray1[2] = new BolaEnergia(100, 940);
 
   // Reiniciar energia
   energia = 100;
@@ -96,6 +92,11 @@ void resetNivel2 () {
 
   // Reset do item Overdrive
   Overdrive1 = new Overdrive(50, 950);
+
+  // Reiniciar bolas de energia
+  bolaEnergiaArray2 = new BolaEnergia [e2];
+  bolaEnergiaArray2[0] = new BolaEnergia(600, 700);
+  bolaEnergiaArray2[1] = new BolaEnergia(350, 500);
 }
 
 void resetNivel3 () {

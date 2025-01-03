@@ -106,7 +106,7 @@ void Nivel1() {
   desenharNuvem(600, 150);
   desenharNuvem(850, 250);
   desenharNuvem(380, 180);
-  desenharNuvem(900, 50);
+
 
   // Energia
   energia();
@@ -135,12 +135,25 @@ void Nivel1() {
     }
   }
 
+  // Desenhar e verificar colisões com as bolas de energia
+  for (int i = 0; i < e1; i++) {
+    if (bolaEnergiaArray1[i] != null) {
+      bolaEnergiaArray1[i].desenhaBolaEnergia();
+
+      if (bolaEnergiaArray1[i].colisaoBolaEnergia(Ecobot)) {
+        bolaEnergiaArray1[i] = null;
+        energia += 35;
+        println("Colisão com bola de energia no índice " + i);
+      }
+    }
+  }
+
   // Lixos colecionados
   textAlign(RIGHT);
   fill(255);
   text("Lixo colecionado", width-30, 70);
 
-  // Desenhar as imagens de lixo no canto superior esquerdo
+  // Desenhar as imagens de lixo no canto superior direito
   for (int i = 0; i < 3; i++) {
     if (lixoColecionado[i]) {
       image(lixoCor, width - 210 + i * 40, 110, 33.5, 43.5); // Exibir lixo coletado (verde)
@@ -166,7 +179,13 @@ void Nivel1() {
     fase = 4; //Fase Nivel1_Falhado
   }
 
-  // Funções Plataformas
+  // Troncos
+  for (int i = 0; i < t1; i++) {
+    troncoArray1[i].desenha();
+    troncoArray1[i].colisaoTronco(Ecobot);
+  }
+
+  // Plataformas
   for (int i = 0; i < n1; i++) {
     plataformaArray1[i].desenha();
     plataformaArray1[i].colisao(Ecobot);
@@ -271,7 +290,6 @@ void Nivel2() {
   desenharNuvem(600, 150);
   desenharNuvem(850, 250);
   desenharNuvem(380, 180);
-  desenharNuvem(900, 50);
 
   // Energia
   energia();
@@ -301,6 +319,19 @@ void Nivel2() {
         lixoColecionado[i] = true; // Marca o lixo como coletado no índice correspondente
         energia -= 10;
         println("Colisão com lixo no índice " + i);
+      }
+    }
+  }
+
+  // Desenhar e verificar colisões com as bolas de energia
+  for (int i = 0; i < e2; i++) {
+    if (bolaEnergiaArray2[i] != null) {
+      bolaEnergiaArray2[i].desenhaBolaEnergia();
+
+      if (bolaEnergiaArray2[i].colisaoBolaEnergia(Ecobot)) {
+        bolaEnergiaArray2[i] = null;
+        energia += 35;
+        println("Colisão com bola de energia no índice " + i);
       }
     }
   }

@@ -36,15 +36,31 @@ class Plataforma {
 
 
   void colisao(Ecobot oEcobot) {
-    //Detetar colisão
-    if (left < oEcobot.right &&
-      right > oEcobot.left &&
-      top < oEcobot.bottom &&
-      bottom > oEcobot.top) {
-      println("a colidir com plataforma");
-      oEcobot.aCair=false;
-      // Evitar que o Ecobot passe para dentro da plataforma
-      oEcobot.y = top - 68/2; // Ajustar a posição para ficar na parte superior da plataforma
+    // Colisão com a parte superior da plataforma
+    if (oEcobot.right > left && oEcobot.left < right && oEcobot.bottom > top && oEcobot.top < top) {
+      oEcobot.y = top - 68 / 2;  // Ajusta a posição do Ecobot acima da plataforma
+      oEcobot.aCair = false;     // Para de cair
+    }
+
+    // Colisão com a parte inferior da plataforma
+    if (oEcobot.left < right && oEcobot.right > left && oEcobot.top < bottom && oEcobot.bottom > bottom) {
+      oEcobot.aSaltar = false;   // Para de saltar
+      oEcobot.aCair = true;      // Começa a cair
+      oEcobot.y = bottom + 68 / 2;  // Ajusta a posição para baixo
+    }
+
+    // Colisão com a lateral esquerda da plataforma
+    if (oEcobot.right > left && oEcobot.left < left && oEcobot.bottom > top && oEcobot.top < bottom) {
+      oEcobot.y = top - 68 / 2; // Teleporta para o topo da plataforma
+      oEcobot.x = left - 45 / 2 - 1; // Ajusta a posição para evitar colisões contínuas
+      oEcobot.aCair = false;    // Para de cair
+    }
+
+    // Colisão com a lateral direita da plataforma
+    if (oEcobot.left < right && oEcobot.right > right && oEcobot.bottom > top && oEcobot.top < bottom) {
+      oEcobot.y = top - 68 / 2; // Teleporta para o topo da plataforma
+      oEcobot.x = right + 45 / 2 + 1; // Ajusta a posição para evitar colisões contínuas
+      oEcobot.aCair = false;    // Para de cair
     }
   }
 }
