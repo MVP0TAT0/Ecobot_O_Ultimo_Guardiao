@@ -1,11 +1,11 @@
 // Funções de movimento do ecobot e colisão provenientes do canal: https://www.youtube.com/@chriswhitmirelessons220
 import processing.sound.*;
-SoundFile morrer, vitoria, bolinhas, somOverdrive, saltar, somLixo, completo;
+SoundFile morrer, vitoria, bolinhas, somOverdrive, saltar, somLixo, completo, bg;
 
 boolean somVitoriaTocado = false;
 boolean somMorrerTocado = false;
 boolean somCompletoTocado = false;
-
+boolean bgTocando = false;
 
 // Imagem do lixo
 PImage lixoImg;
@@ -16,7 +16,7 @@ PImage lixoCor;
 PImage overdrive;
 
 // Imagem "Como jogar" e "Vitoria"
-PImage ComoJogar, Vitoria;
+PImage ComoJogar, Vitoria, Background;
 
 // Classe Overdrive
 Overdrive Overdrive1, Overdrive2;
@@ -69,6 +69,7 @@ void setup() {
   saltar = new SoundFile(this, "saltar.mp3");
   somLixo = new SoundFile(this, "lixo.mp3");
   completo = new SoundFile(this, "completo.mp3");
+  bg = new SoundFile(this, "bg.mp3");
 
   // Criar Ecobot
   Ecobot = new Ecobot(500, height-50);
@@ -81,7 +82,7 @@ void setup() {
   plataformaArray1 = new Plataforma [n1];
   plataformaArray1[0] = new Plataforma(width/2, height-10, width, 20); //Chão
   plataformaArray1[1] = new Plataforma(270, 900, 160, 20);
-  plataformaArray1[2] = new Plataforma(500, 800, 200, 20);
+  plataformaArray1[2] = new Plataforma(500, 825, 200, 20);
   plataformaArray1[3] = new Plataforma(800, 800, 160, 20);
   plataformaArray1[4] = new Plataforma(880, 700, 80, 20);
   plataformaArray1[5] = new Plataforma(520, 600, 500, 20);
@@ -230,48 +231,54 @@ void draw() {
 
   case 2:
     Nivel1();
+    bg();
     break;
 
   case 3:
     Nivel1_Concluido();
-    playCompletoSound(fase);
+    playCompletoSound();
     break;
 
   case 4:
     Nivel1_Falhado();
-    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
+    playMorrerSound();
     break;
 
   case 5:
     Nivel2();
+    bg();
     break;
 
   case 6:
     Nivel2_Concluido();
-    playCompletoSound(fase);
+    playCompletoSound();
     break;
 
   case 7:
     Nivel2_Falhado();
-    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
+    playMorrerSound();
     break;
 
   case 8:
     Nivel3();
+    bg();
     break;
 
   case 9:
     Nivel3_Concluido();
-    playCompletoSound(fase);
+    playCompletoSound();
     break;
 
   case 10:
     Nivel3_Falhado();
-    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
+    playMorrerSound();  // Chama a função que verifica se deve tocar o som
     break;
 
   case 11:
     Vitoria();
+
+    bg.stop();
+
     if (!somVitoriaTocado) {
       vitoria.play();
       somVitoriaTocado = true;

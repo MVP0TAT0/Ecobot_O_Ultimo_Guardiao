@@ -261,30 +261,29 @@ class Ecobot {
 }
 
 
-//Teclas de movimento
+// Teclas de movimento para Ecobot
 void keyPressed() {
-  if (key == 'd') {
-    Ecobot.andarDireita=true;
+  if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+    Ecobot.andarDireita = true;
   }
 
-  if (key == 'a') {
-    Ecobot.andarEsquerda=true;
+  if (key == 'a' || key == 'A' || keyCode == LEFT) {
+    Ecobot.andarEsquerda = true;
   }
 
-  if (key == 'w' && Ecobot.aSaltar==false && Ecobot.aCair==false) {
-    Ecobot.aSaltar=true;
+  if ((key == 'w' || key == 'W' || keyCode == UP) && Ecobot.aSaltar == false && Ecobot.aCair == false) {
+    Ecobot.aSaltar = true;
     Ecobot.ySalto = Ecobot.y - Ecobot.alturaSalto;
     saltar.play();
   }
 }
 
-
 void keyReleased() {
-  if (key == 'd') {
-    Ecobot.andarDireita=false;
+  if (key == 'd' || key == 'D' || keyCode == RIGHT) {
+    Ecobot.andarDireita = false;
   }
 
-  if (key == 'a') {
-    Ecobot.andarEsquerda=false;
+  if (key == 'a' || key == 'A' || keyCode == LEFT) {
+    Ecobot.andarEsquerda = false;
   }
 }

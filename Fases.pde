@@ -9,7 +9,8 @@ color bColor = color(40, 155, 0);
 void MenuPrincipal() {
 
   // Título do jogo
-  background(255);
+  Background = loadImage("background.png");
+  image(Background, 500, 500);
   textAlign(CENTER);
   fill(0);
   textSize(115);
@@ -494,12 +495,12 @@ void Nivel3() {
   Ecobot.topoSalto();
   Ecobot.aterrar();
   Ecobot.cairPlataforma(plataformaArray3);
-  
+
   // Funções Redbot
   Redbot1.desenha();
   Redbot1.mover();
   Redbot1.colisao(Ecobot);
-  
+
   // Funções Redbot
   Redbot2.desenha();
   Redbot2.mover();
@@ -700,8 +701,10 @@ void ComoJogar() {
 // Menu Selecionar Nível
 void Selecionar_Nivel() {
 
+  Background = loadImage("background.png");
+  image(Background, 500, 500);
+
   noStroke();
-  background(255);
   fill(0);
   textSize(60);
   text("Selecione o nível", bx, by-250);

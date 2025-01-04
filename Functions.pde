@@ -149,17 +149,29 @@ void resetNivel3 () {
   bolaEnergiaArray3[1] = new BolaEnergia(650, 500);
 }
 
-// Verificação para que o som só toque quando necessário
-void playMorrerSound(int faseAtual) {
-  if ((faseAtual == 4 || faseAtual == 7 || faseAtual == 10) && !somMorrerTocado) {
+// Fazer o som tocar só tocar 1 vez nas fases exatas
+void playMorrerSound() {
+  if ((fase == 4 || fase == 7 || fase == 10) && !somMorrerTocado) {
     morrer.play();
     somMorrerTocado = true;
   }
 }
 
-void playCompletoSound(int faseAtual) {
-  if ((faseAtual == 3 || faseAtual == 6 || faseAtual == 9) && !somCompletoTocado) {
+void playCompletoSound() {
+  if ((fase == 3 || fase == 6 || fase == 9) && !somCompletoTocado) {
     completo.play();
     somCompletoTocado = true;
+  }
+}
+
+void bg() {
+  if (fase >= 2 && fase <= 10) {  // Fase entre 2 e 10
+    if (!bgTocando) {
+      bg.loop();  // Usa loop diretamente
+      bgTocando = true;
+    }
+  } else {
+    bg.stop();  // Para a música quando a fase não for entre 2 e 10
+    bgTocando = false;
   }
 }
