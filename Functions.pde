@@ -19,14 +19,20 @@ void energia() {
   }
 
   // Verificar se a energia acabou
-  if (energia <= 0 && fase == 2) {
-    energia = 0;  // Garantir que a energia não fique negativa
-    println("Nivel 1 perdido!");
-    fase = 4;
-  } else if (energia <= 0 && fase == 5) {
-    energia = 0;
-    println("Nivel 2 perdido");
-    fase = 7;
+  if (energia <= 0) {
+    if (fase == 2) {
+      energia = 0;  // Garantir que a energia não fique negativa
+      println("Nivel 1 perdido!");
+      fase = 4;
+    } else if (fase == 5) {
+      energia = 0;
+      println("Nivel 2 perdido");
+      fase = 7;
+    } else if (fase == 8) {
+      energia = 0;
+      println("Nivel 3 perdido!");
+      fase = 10;
+    }
   }
 
 
@@ -100,6 +106,31 @@ void resetNivel2 () {
 }
 
 void resetNivel3 () {
+
+  // Reiniciar o Ecobot
+  Ecobot = new Ecobot(500, height-68/2);
+
+  // Reiniciar o array de lixos
+  lixoArray3 = new Lixo[3];
+  lixoArray3[0] = new Lixo(400, 760, lixoImg);
+  lixoArray3[1] = new Lixo(500, 560, lixoImg);
+  lixoArray3[2] = new Lixo(965, 560, lixoImg);
+
+  // Reiniciar o estado dos lixos
+  for (int i = 0; i < lixoColecionado.length; i++) {
+    lixoColecionado[i] = false;
+  }
+
+  // Reiniciar energia
+  energia = 100;
+
+  // Reset do item Overdrive
+  Overdrive2 = new Overdrive(750, 750);
+
+  // Reiniciar bolas de energia
+  bolaEnergiaArray3 = new BolaEnergia [e3];
+  bolaEnergiaArray3[0] = new BolaEnergia(290, 500);
+  bolaEnergiaArray3[1] = new BolaEnergia(650, 300);
 }
 
 void mousePressed() {
@@ -110,19 +141,27 @@ void mousePressed() {
       mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
       fase = 2;
     }
-    //Encontrar posição do botão "Como jogar"
+    //Encontrar posição do botão "Selecionar nível"
     if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
       mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
-      fase = 1;
+      fase = 12;
     }
-    //Encontrar posição do botão "Sair"
+    //Encontrar posição do botão "Como jogar"
     if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
       mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
-      exit();
+      fase = 1;
     }
   }
-  //Botões Menu Como jogar
+  //Botão Menu Como jogar
   if (fase == 1) {
+    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+      mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
+      fase = 0;
+    }
+  }
+
+  //Botões Menu "Selecionar nível"
+  if (fase == 12) {
     if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
       mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
       fase = 0;

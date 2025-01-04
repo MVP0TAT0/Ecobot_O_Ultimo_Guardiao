@@ -44,7 +44,7 @@ class Overdrive {
       tempoInicioEfeito = millis(); // Marca o início do efeito
       ativo = false;
       ecobot.vel = 6;
-      energia += 20;
+      energia += 35;
     }
 
     // Desativa o efeito após 2 segundos
