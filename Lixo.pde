@@ -6,7 +6,7 @@ class Lixo {
   Lixo(float _x, float _y, PImage _imagem) {
     x = _x;
     y = _y;
-    w = 47;  
+    w = 47;
     h = 67;
     imagem = _imagem;
     imageMode(CENTER);
@@ -18,9 +18,13 @@ class Lixo {
   }
 
   boolean colisaoLixo(Ecobot ecobot) {
-    return !(ecobot.right < x - w/2 ||     // Ecobot está à esquerda do lixo
+    if (!(ecobot.right < x - w/2 ||     // Ecobot está à esquerda do lixo
       ecobot.left > x + w/2 ||     // Ecobot está à direita do lixo
       ecobot.bottom < y - h/2 ||   // Ecobot está acima do lixo
-      ecobot.top > y + h/2);       // Ecobot está abaixo do lixo
+      ecobot.top > y + h/2)) {     // Ecobot está abaixo do lixo
+      somLixo.play(); // Toca o som ao colidir
+      return true;
+    }
+    return false;
   }
 }

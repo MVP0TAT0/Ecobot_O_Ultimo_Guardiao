@@ -40,15 +40,18 @@ class Overdrive {
 
   // Efeito de Overdrive
   void aplicarEfeito(Ecobot ecobot) {
-    if (ativo && colisaoOverdrive(ecobot)) {
+    if (colisaoOverdrive(ecobot)) {
       tempoInicioEfeito = millis(); // Marca o início do efeito
       ativo = false;
       ecobot.vel = 6;
       energia += 35;
+
+      // Toca o som de Overdrive
+      somOverdrive.play();
     }
 
     // Desativa o efeito após 2 segundos
-    if (!ativo && millis() - tempoInicioEfeito > 2000) {
+    if (millis() - tempoInicioEfeito > 2000) {
       ecobot.vel = 3;
     }
   }

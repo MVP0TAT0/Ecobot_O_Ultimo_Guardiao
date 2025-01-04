@@ -27,9 +27,13 @@ class BolaEnergia {
 
   // Colisão com o item
   boolean colisaoBolaEnergia(Ecobot ecobot) {
-    return !(ecobot.right < x - d ||
+    if (!(ecobot.right < x - d ||
       ecobot.left > x + d ||
       ecobot.bottom < y - d ||
-      ecobot.top > y + d);
+      ecobot.top > y + d)) {
+      bolinhas.play();
+      return true;
+    }
+    return false;
   }
 }

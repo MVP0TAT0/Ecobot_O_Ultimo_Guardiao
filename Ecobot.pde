@@ -174,9 +174,9 @@ class Ecobot {
 
       noStroke();
     }
-    // Desenhar hitbox visível
+
     fill(255, 0, 0, 100);
-    noFill();
+    noFill();  // - > Comentar para parar de desenhar hitbox visível
     rectMode(CORNERS);
     rect(left, top, right, bottom);
   }
@@ -274,6 +274,7 @@ void keyPressed() {
   if (key == 'w' && Ecobot.aSaltar==false && Ecobot.aCair==false) {
     Ecobot.aSaltar=true;
     Ecobot.ySalto = Ecobot.y - Ecobot.alturaSalto;
+    saltar.play();
   }
 }
 

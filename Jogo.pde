@@ -1,4 +1,11 @@
 // Funções de movimento do ecobot e colisão provenientes do canal: https://www.youtube.com/@chriswhitmirelessons220
+import processing.sound.*;
+SoundFile morrer, vitoria, bolinhas, somOverdrive, saltar, somLixo, completo;
+
+boolean somVitoriaTocado = false;
+boolean somMorrerTocado = false;
+boolean somCompletoTocado = false;
+
 
 // Imagem do lixo
 PImage lixoImg;
@@ -16,6 +23,9 @@ Overdrive Overdrive1, Overdrive2;
 
 // Classe Ecobot
 Ecobot Ecobot;
+
+// Classe RedBot
+Redbot Redbot1, Redbot2;
 
 // Classes com Arrays
 Plataforma[] plataformaArray1, plataformaArray2, plataformaArray3;
@@ -51,8 +61,21 @@ void setup() {
   size(1000, 1000);
   frameRate(60);
 
+  // Sons
+  morrer = new SoundFile(this, "morrer.mp3");
+  vitoria = new SoundFile(this, "vitoria.mp3");
+  bolinhas = new SoundFile(this, "bolinhas.mp3");
+  somOverdrive = new SoundFile(this, "overdrive.mp3");
+  saltar = new SoundFile(this, "saltar.mp3");
+  somLixo = new SoundFile(this, "lixo.mp3");
+  completo = new SoundFile(this, "completo.mp3");
+
   // Criar Ecobot
   Ecobot = new Ecobot(500, height-50);
+
+  // Criar Redbot
+  Redbot1 = new Redbot(100, height-50, 15, 985);
+  Redbot2 = new Redbot(500, 565, 360, 630);
 
   // Criar Plataformas Nível 1
   plataformaArray1 = new Plataforma [n1];
@@ -159,7 +182,7 @@ void setup() {
   // Criar bolas de energia nível 3
   bolaEnergiaArray3 = new BolaEnergia [e3];
   bolaEnergiaArray3[0] = new BolaEnergia(290, 500);
-  bolaEnergiaArray3[1] = new BolaEnergia(650, 300);
+  bolaEnergiaArray3[1] = new BolaEnergia(650, 500);
 
   // Criar Lixos Nível 1
   lixoImg = loadImage("lixo.png");
@@ -195,10 +218,8 @@ void setup() {
 }
 
 void draw() {
-
   // Switch case para ir mudando de fases
   switch(fase) {
-
   case 0:
     MenuPrincipal();
     break;
@@ -213,10 +234,12 @@ void draw() {
 
   case 3:
     Nivel1_Concluido();
+    playCompletoSound(fase);
     break;
 
   case 4:
     Nivel1_Falhado();
+    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
     break;
 
   case 5:
@@ -225,10 +248,12 @@ void draw() {
 
   case 6:
     Nivel2_Concluido();
+    playCompletoSound(fase);
     break;
 
   case 7:
     Nivel2_Falhado();
+    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
     break;
 
   case 8:
@@ -237,14 +262,20 @@ void draw() {
 
   case 9:
     Nivel3_Concluido();
+    playCompletoSound(fase);
     break;
 
   case 10:
     Nivel3_Falhado();
+    playMorrerSound(fase);  // Chama a função que verifica se deve tocar o som
     break;
 
   case 11:
     Vitoria();
+    if (!somVitoriaTocado) {
+      vitoria.play();
+      somVitoriaTocado = true;
+    }
     break;
 
   case 12:

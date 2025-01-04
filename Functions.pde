@@ -20,16 +20,16 @@ void energia() {
 
   // Verificar se a energia acabou
   if (energia <= 0) {
+
+    energia = 0; // Garantir que a energia não fique negativa
+
     if (fase == 2) {
-      energia = 0;  // Garantir que a energia não fique negativa
       println("Nivel 1 perdido!");
       fase = 4;
     } else if (fase == 5) {
-      energia = 0;
-      println("Nivel 2 perdido");
+      println("Nivel 2 perdido!");
       fase = 7;
     } else if (fase == 8) {
-      energia = 0;
       println("Nivel 3 perdido!");
       fase = 10;
     }
@@ -51,6 +51,10 @@ void energia() {
 }
 
 void resetNivel1 () {
+
+  // Reiniciar sons
+  somMorrerTocado = false;
+  somCompletoTocado = false;
 
   // Reiniciar o Ecobot
   Ecobot = new Ecobot(500, height-68/2);
@@ -77,6 +81,10 @@ void resetNivel1 () {
 }
 
 void resetNivel2 () {
+
+  // Reiniciar sons
+  somMorrerTocado = false;
+  somCompletoTocado = false;
 
   // Reiniciar o Ecobot
   Ecobot = new Ecobot(500, height-68/2);
@@ -107,8 +115,16 @@ void resetNivel2 () {
 
 void resetNivel3 () {
 
+  // Reiniciar sons
+  somMorrerTocado = false;
+  somCompletoTocado = false;
+
   // Reiniciar o Ecobot
-  Ecobot = new Ecobot(500, height-68/2);
+  Ecobot = new Ecobot(500, height-50);
+
+  // Reiniciar os Redbot
+  Redbot1 = new Redbot(100, height-50, 15, 985);
+  Redbot2 = new Redbot(500, 565, 360, 630);
 
   // Reiniciar o array de lixos
   lixoArray3 = new Lixo[3];
@@ -130,41 +146,20 @@ void resetNivel3 () {
   // Reiniciar bolas de energia
   bolaEnergiaArray3 = new BolaEnergia [e3];
   bolaEnergiaArray3[0] = new BolaEnergia(290, 500);
-  bolaEnergiaArray3[1] = new BolaEnergia(650, 300);
+  bolaEnergiaArray3[1] = new BolaEnergia(650, 500);
 }
 
-void mousePressed() {
-  //Botões Menu principal
-  if (fase == 0) {
-    //Encontrar posição do botão "Jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2) {
-      fase = 2;
-    }
-    //Encontrar posição do botão "Selecionar nível"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
-      fase = 12;
-    }
-    //Encontrar posição do botão "Como jogar"
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
-      fase = 1;
-    }
+// Verificação para que o som só toque quando necessário
+void playMorrerSound(int faseAtual) {
+  if ((faseAtual == 4 || faseAtual == 7 || faseAtual == 10) && !somMorrerTocado) {
+    morrer.play();
+    somMorrerTocado = true;
   }
-  //Botão Menu Como jogar
-  if (fase == 1) {
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
-      fase = 0;
-    }
-  }
+}
 
-  //Botões Menu "Selecionar nível"
-  if (fase == 12) {
-    if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
-      mouseY >= by - 200 - ba / 2 && mouseY <= by - 200 + ba / 2) {
-      fase = 0;
-    }
+void playCompletoSound(int faseAtual) {
+  if ((faseAtual == 3 || faseAtual == 6 || faseAtual == 9) && !somCompletoTocado) {
+    completo.play();
+    somCompletoTocado = true;
   }
 }

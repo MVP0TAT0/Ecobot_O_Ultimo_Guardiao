@@ -59,9 +59,12 @@ void MenuPrincipal() {
     fill(bColor);
     textSize(40);
     text("Jogar", bx, by+63);
+    if (mousePressed) {
+      fase = 2;
+    }
   }
 
-  // Botão "Como jogar"
+  // Botão "Selecionar nível"
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 150 - ba / 2 && mouseY <= by + 150 + ba / 2) {
     stroke(bColor);
     strokeWeight(3);
@@ -70,9 +73,12 @@ void MenuPrincipal() {
     fill(bColor);
     textSize(40);
     text("Selecionar nível", bx, by+163);
+    if (mousePressed) {
+      fase = 12;
+    }
   }
 
-  // Botão "Sair"
+  // Botão "Como Jogar"
   if (mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 && mouseY >= by + 250 - ba / 2 && mouseY <= by + 250 + ba / 2) {
     stroke(bColor);
     strokeWeight(3);
@@ -81,6 +87,9 @@ void MenuPrincipal() {
     fill(bColor);
     textSize(40);
     text("Como jogar", bx, by+263);
+    if (mousePressed) {
+      fase = 1;
+    }
   }
 }
 
@@ -203,11 +212,11 @@ void Nivel1_Concluido() {
   text("Nível 1 concluído!", width / 2, height / 2 - 100);
 
   // Determinar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean Hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (Hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -227,7 +236,7 @@ void Nivel1_Concluido() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && Hover) {
     resetNivel1(); // Reiniciar o estado do nível 1
     fase = 5; // Nivel 2
   }
@@ -245,11 +254,11 @@ void Nivel1_Falhado() {
   text("O Ecobot ficou sem energia!", width / 2, height / 2 - 100);
 
   // Verificar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -269,7 +278,7 @@ void Nivel1_Falhado() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && hover) {
     resetNivel1(); // Reiniciar o estado do nível 1
     fase = 2; // Nivel 1
   }
@@ -388,11 +397,11 @@ void Nivel2_Concluido() {
   text("Nível 2 concluído!", width / 2, height / 2 - 100);
 
   // Determinar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -412,7 +421,7 @@ void Nivel2_Concluido() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && hover) {
     resetNivel2(); // Reiniciar o estado do nível 1
     fase = 8; // Nivel 3
   }
@@ -430,11 +439,11 @@ void Nivel2_Falhado() {
   text("O Ecobot ficou sem energia!", width / 2, height / 2 - 100);
 
   // Verificar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -454,7 +463,7 @@ void Nivel2_Falhado() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && hover) {
     resetNivel2(); // Reiniciar o estado do nível 2
     fase = 5; // Nivel 2
   }
@@ -485,6 +494,16 @@ void Nivel3() {
   Ecobot.topoSalto();
   Ecobot.aterrar();
   Ecobot.cairPlataforma(plataformaArray3);
+  
+  // Funções Redbot
+  Redbot1.desenha();
+  Redbot1.mover();
+  Redbot1.colisao(Ecobot);
+  
+  // Funções Redbot
+  Redbot2.desenha();
+  Redbot2.mover();
+  Redbot2.colisao(Ecobot);
 
   // Desenhar e verificar colisões com os lixos
   for (int i = 0; i < 3; i++) {
@@ -572,11 +591,11 @@ void Nivel3_Concluido() {
   text("Nível 3 concluído!", width / 2, height / 2 - 100);
 
   // Determinar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -596,7 +615,7 @@ void Nivel3_Concluido() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && hover) {
     resetNivel3(); // Reiniciar o estado do nível 3
     fase = 11; // Vitória
   }
@@ -614,11 +633,11 @@ void Nivel3_Falhado() {
   text("O Ecobot ficou sem energia!", width / 2, height / 2 - 100);
 
   // Verificar se o cursor está sobre o botão
-  boolean isHover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
+  boolean hover = mouseX >= bx - bl / 2 && mouseX <= bx + bl / 2 &&
     mouseY >= by + 50 - ba / 2 && mouseY <= by + 50 + ba / 2;
 
   // Desenhar o botão
-  if (isHover) {
+  if (hover) {
     textSize(40);
     cursor(HAND);
     stroke(bColor);
@@ -638,7 +657,7 @@ void Nivel3_Falhado() {
   }
 
   // Verificar clique no botão
-  if (mousePressed && isHover) {
+  if (mousePressed && hover) {
     resetNivel3(); // Reiniciar o estado do nível 3
     fase = 8; // Nivel 3
   }
