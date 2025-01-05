@@ -18,13 +18,15 @@ class Lixo {
   }
 
   boolean colisaoLixo(Ecobot ecobot) {
-    if (!(ecobot.right < x - w/2 ||     // Ecobot está à esquerda do lixo
-      ecobot.left > x + w/2 ||     // Ecobot está à direita do lixo
-      ecobot.bottom < y - h/2 ||   // Ecobot está acima do lixo
-      ecobot.top > y + h/2)) {     // Ecobot está abaixo do lixo
-      somLixo.play(); // Toca o som ao colidir
-      return true;
+
+    // Se o ecobot está a colidir...
+    if (ecobot.right >= x - w/2 &&
+      ecobot.left <= x + w/2 &&
+      ecobot.bottom >= y - h/2 &&
+      ecobot.top <= y + h/2) {
+      somLixo.play(); //...então toca o som...
+      return true;  // ...e o boolean devolve true
     }
-    return false;
+    return false;  // Caso contrário, devolve false
   }
 }

@@ -3,6 +3,7 @@ class Overdrive {
   float offset;  // Deslocamento para a animação
   float vel;     // Velocidade da animação
 
+  // Função de temporizador com ajuda de ChatGPT
   boolean ativo = true; // Indica se o Overdrive ainda está disponível
   float tempoInicioEfeito; // Guarda o momento de início do efeito
 
@@ -32,16 +33,19 @@ class Overdrive {
 
   // Colisão com o item
   boolean colisaoOverdrive(Ecobot ecobot) {
-    return ativo && !(ecobot.right < x - w / 2 ||
-      ecobot.left > x + w / 2 ||
-      ecobot.bottom < y - h / 2 ||
-      ecobot.top > y + h / 2);
+    if (ativo && ecobot.right >= x - w / 2 &&  // Há colisão se colide e está ativo
+      ecobot.left <= x + w / 2 &&
+      ecobot.bottom >= y - h / 2 &&
+      ecobot.top <= y + h / 2) {
+      return true;
+    }
+    return false;
   }
 
   // Efeito de Overdrive
   void aplicarEfeito(Ecobot ecobot) {
     if (colisaoOverdrive(ecobot)) {
-      tempoInicioEfeito = millis(); // Marca o início do efeito
+      tempoInicioEfeito = millis(); // Marca o início do efeito em milissegundos
       ativo = false;
       ecobot.vel = 6;
       energia += 35;
@@ -51,7 +55,7 @@ class Overdrive {
     }
 
     // Desativa o efeito após 2 segundos
-    if (millis() - tempoInicioEfeito > 2000) {
+    if (millis() - tempoInicioEfeito > 2000) {  // Calculo por ChatGPT
       ecobot.vel = 3;
     }
   }

@@ -1,17 +1,18 @@
 class BolaEnergia {
-  float x, y, d;
+  float x, y, r;
   float offset;  // Deslocamento para a animação
   float vel;     // Velocidade da animação
 
   BolaEnergia(float _x, float _y) {
     x = _x;
     y = _y;
-    d = 20;
+    r = 10;
     offset = 0;
     vel = 0.15;
   }
 
   void desenhaBolaEnergia() {
+
     // Atualiza o deslocamento para criar o efeito de levitação
     offset += vel;
 
@@ -21,19 +22,21 @@ class BolaEnergia {
     }
 
     fill(255, 255, 0);
-    circle(x, y + offset, d);
+    circle(x, y + offset, r*2);
   }
 
 
   // Colisão com o item
   boolean colisaoBolaEnergia(Ecobot ecobot) {
-    if (!(ecobot.right < x - d ||
-      ecobot.left > x + d ||
-      ecobot.bottom < y - d ||
-      ecobot.top > y + d)) {
-      bolinhas.play();
-      return true;
+
+    // Se o ecobot está a colidir...
+    if (ecobot.right >= x - r &&
+      ecobot.left <= x + r &&
+      ecobot.bottom >= y - r &&
+      ecobot.top <= y + r) {
+      bolinhas.play();  //...então toca o som...
+      return true;  // ...e o boolean devolve true
     }
-    return false;
+    return false;  // Caso contrário, devolve false
   }
 }

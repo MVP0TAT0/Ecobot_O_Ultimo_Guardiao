@@ -1,7 +1,7 @@
 class Ecobot {
   float x, y;
 
-  float vel;            //Velocidade do movimento
+  float vel;          //Velocidade do movimento
 
   int alturaSalto;    //Distância do salto
   float ySalto;       //Valor y do topo da distância do salto
@@ -24,9 +24,10 @@ class Ecobot {
     andarDireita = false;
     aSaltar = false;
     aCair = false;
-    vel = 3;
-    alturaSalto = 100;
-    ySalto = y - alturaSalto;
+
+    vel = 3; // Velocidade do salto
+    alturaSalto = 100; // Altura máxima do salto
+    ySalto = y - alturaSalto; // Saber o y da altura máxima do salto
 
     //Hitbox Ecobot
     left = x - 45/2;
@@ -37,11 +38,14 @@ class Ecobot {
 
 
   void desenha() {
+
+    // Variável de animação com auxílio do ChatGPT e ajustes finais de valores por nós
     float idle = sin(frameCount * 0.05) * 3; // Movimento cíclico
+
     float animPerna1 = sin(frameCount * 0.15) * 3;
     float animPerna2 = sin(frameCount * 0.15 + PI) * 3;
 
-    if (andarDireita) {
+    if (andarDireita) { // Desenho e animação quando anda para a direita
 
       stroke(0);
       strokeWeight(1);
@@ -88,7 +92,7 @@ class Ecobot {
       circle(x - 19, y - 12 + idle, 12);
 
       noStroke();
-    } else if (andarEsquerda) {
+    } else if (andarEsquerda) { // Desenho e animação quando anda para a esquerda
 
       stroke(0);
       strokeWeight(1);
@@ -134,7 +138,7 @@ class Ecobot {
       circle(x + 19, y - 12 + idle, 12);
 
       noStroke();
-    } else {
+    } else {  // Desenho e animação quando está parado
       stroke(0);
       strokeWeight(1);
 
@@ -175,18 +179,20 @@ class Ecobot {
       noStroke();
     }
 
+    // Hitbox visível quando o noFill() está desligado
+    // Apenas para efeitos de debugging
     fill(255, 0, 0, 100);
-    noFill();  // - > Comentar para parar de desenhar hitbox visível
+    noFill();  // - > Comentar para desenhar hitbox visível
     rectMode(CORNERS);
     rect(left, top, right, bottom);
   }
 
   void mover() {
-    if (andarDireita == true && x + 45 / 2 < width) {
-      x += vel;
-      energia -= 0.15;
+    if (andarDireita == true && x + 45 / 2 < width) {   // Movimento e impor limite de margem da janela
+      x += vel;  // Movimento
+      energia -= 0.15;  // Perde energia ao mover
     }
-    if (andarEsquerda == true && x -45 / 2 > 0) {
+    if (andarEsquerda == true && x -45 / 2 > 0) {  // Movimento e impor limite de margem da janela
       x -= vel;
       energia -= 0.15;
     }
@@ -198,57 +204,47 @@ class Ecobot {
     bottom = y + 68/2;
   }
 
-
-
   void salto() {
     if (aSaltar == true) {
-      y -= 5;
-      energia -= 0.35;
+      y -= 5;  // Salto
+      energia -= 0.35;  // Perde energia ao saltar
     }
   }
 
   void cair() {
     if (aCair == true) {
-      y += 5;
+      y += 5;  // Queda
     }
   }
 
   void topoSalto() {
-    //Parar de saltar ao chegar ao topo do salto
-    if (y <= ySalto) {
+
+    if (y <= ySalto) {  //Parar de saltar ao chegar ao topo do salto
       aSaltar=false;
       aCair=true;
     }
   }
 
-  //aterrar no chao
-  void aterrar() {
-    if (y >= height - 68/2) {
-      aCair=false;
-      y = height - 68/2;
-    }
-  }
+  // Mistura do canal do Youtube mencionado na primeira linha, ChatGPT e ajustes próprios
+  void cairPlataforma(Plataforma[] oArray) {   // Verificar se há colisão com qualquer plataforma, se não estiver a colidir, o jogador começa a cair
 
-  //Verificar se há colisão com qualquer plataformas
-  //se não estiver a colidir, o jogador começa a cair
-  void cairPlataforma(Plataforma[] oArray) {
-    // Verificar se o Ecobot não está a meio de um salto
-    // e verificar que o jogador não está no chão
-    if (!aSaltar && y < height - 68) {
+    if (!aSaltar) { // Verificar se o Ecobot não está a meio de um salto
 
       boolean naPlataforma = false;
 
       for (int i = 0; i < oArray.length; i++) {
-        Plataforma aPlataforma = oArray[i];
-        // Verificar colisão com o topo da plataforma
-        if (bottom >= aPlataforma.top - 1 &&   // Margem para evitar instabilidade
-          bottom <= aPlataforma.top + 5 &&  // Considera uma pequena margem
-          left < aPlataforma.right &&
-          right > aPlataforma.left) {
-          naPlataforma = true; // Está sobre a plataforma
-          aCair = false;       // Para de cair
-          y = aPlataforma.top - 68/2; // Ajusta o Ecobot sobre a plataforma
-          break;
+
+        // Verificar colisão
+        if (bottom >= oArray[i].top - 1 &&   // Margem para evitar instabilidade
+          bottom <= oArray[i].top + 5 &&     // Considera uma pequena margem
+          left < oArray[i].right &&
+          right > oArray[i].left) {
+
+          naPlataforma = true;        // Está sobre a plataforma
+          aCair = false;              // Para de cair
+          y = oArray[i].top - 68/2;   // Ajusta o Ecobot sobre a plataforma
+
+          break;  // Ao detetar colisão com uma plataforma, para de tentar detetar nas outras
         }
       }
 

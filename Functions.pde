@@ -1,4 +1,4 @@
-// Função para desenhar nuvens
+// Desenhar nuvens
 void desenharNuvem(float x, float y) {
   fill(255);
   noStroke();
@@ -7,11 +7,10 @@ void desenharNuvem(float x, float y) {
   ellipse(x + 30, y + 10, 50, 30);
 }
 
-int larguraBarra = 300;
-
 void energia() {
 
   int alturaBarra = 20;
+  int larguraBarra = 300;
 
   // Impedir que o Ecobot ganhe mais energia do que o máximo
   if (energia > 100) {
@@ -39,18 +38,18 @@ void energia() {
   textAlign(LEFT);
   text("Energia", 26, 70);
 
-  // Desenhar a barra de energia
+  // Barra de energia vermelha
   rectMode(CORNER);
-  fill(255, 0, 0); // Cor vermelha
+  fill(255, 0, 0);
   noStroke();
-  rect(30, 90, larguraBarra, alturaBarra); // Fundo da barra
+  rect(30, 90, larguraBarra, alturaBarra);
 
-  // Barra de energia (com a largura diminuindo conforme a energia)
-  fill(255, 255, 0); // Cor verde
-  rect(30, 90, larguraBarra * (energia / 100), alturaBarra); // Parte cheia da barra
+  // Barra de energia amarela que diminui conforme a energia)
+  fill(255, 255, 0);
+  rect(30, 90, larguraBarra * (energia / 100), alturaBarra);
 }
 
-void resetNivel1 () {
+void resetNivel1 () {  // Reiniciar o estado e posição de todos os elementos não fixos
 
   // Reiniciar sons
   somMorrerTocado = false;

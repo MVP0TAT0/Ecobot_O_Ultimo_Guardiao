@@ -1,4 +1,6 @@
-// Funções de movimento do ecobot e colisão provenientes do canal: https://www.youtube.com/@chriswhitmirelessons220
+// Funções de movimento do ecobot e colisão de plataformas provenientes do canal: https://www.youtube.com/@chriswhitmirelessons220
+
+// Sons
 import processing.sound.*;
 SoundFile morrer, vitoria, bolinhas, somOverdrive, saltar, somLixo, completo, bg;
 
@@ -44,15 +46,12 @@ int t2 = 3;  // Nível 2
 int t3 = 20; // Nível 3
 
 // Número de bolas de energia por nível
-int e1 = 3;
-int e2 = 2;
-int e3 = 2;
+int e1 = 3;  // Nível 1
+int e2 = 2;  // Nível 2
+int e3 = 2;  // Nível 3
 
-// Fases
-int fase = 0;
-// 0 -> Menu inicial
-// 1 -> Jogo
-// 2 -> Menu "Como jogar"
+// Fases do jogo
+int fase = 0; // Começar no Menu inicial
 
 // Energia
 float energia = 100;
@@ -61,7 +60,7 @@ void setup() {
   size(1000, 1000);
   frameRate(60);
 
-  // Sons
+  // Criar Sons
   morrer = new SoundFile(this, "morrer.mp3");
   vitoria = new SoundFile(this, "vitoria.mp3");
   bolinhas = new SoundFile(this, "bolinhas.mp3");
@@ -82,7 +81,7 @@ void setup() {
   plataformaArray1 = new Plataforma [n1];
   plataformaArray1[0] = new Plataforma(width/2, height-10, width, 20); //Chão
   plataformaArray1[1] = new Plataforma(270, 900, 160, 20);
-  plataformaArray1[2] = new Plataforma(500, 825, 200, 20);
+  plataformaArray1[2] = new Plataforma(500, 800, 200, 20);
   plataformaArray1[3] = new Plataforma(800, 800, 160, 20);
   plataformaArray1[4] = new Plataforma(880, 700, 80, 20);
   plataformaArray1[5] = new Plataforma(520, 600, 500, 20);
@@ -271,7 +270,7 @@ void draw() {
 
   case 10:
     Nivel3_Falhado();
-    playMorrerSound();  // Chama a função que verifica se deve tocar o som
+    playMorrerSound();
     break;
 
   case 11:
@@ -279,9 +278,9 @@ void draw() {
 
     bg.stop();
 
-    if (!somVitoriaTocado) {
+    if (!somVitoriaTocado) { // Se o som de Vitoria não tiver sido tocado ainda, toca
       vitoria.play();
-      somVitoriaTocado = true;
+      somVitoriaTocado = true; // Impede que o som volte a tocar todos os frames
     }
     break;
 

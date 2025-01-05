@@ -16,10 +16,11 @@ class Redbot {
     y = _y;
     vel = 3;
 
+    // Define limites de movimento
     limiteEsquerda = _limiteEsquerda;
     limiteDireita = _limiteDireita;
 
-    moverDireita = true;
+    moverDireita = true;  // Começa a mover para a direita
 
     // Hitbox do Redbot
     left = x - 15;
@@ -29,7 +30,7 @@ class Redbot {
   }
 
   void desenha() {
-    float idle = sin(frameCount * 0.05) * 3; // Movimento cíclico
+    float idle = sin(frameCount * 0.05) * 3;
     float animPerna1 = sin(frameCount * 0.15) * 3;
     float animPerna2 = sin(frameCount * 0.15 + PI) * 3;
 
@@ -102,19 +103,19 @@ class Redbot {
 
   void mover() {
     // Movimento do Redbot dentro dos limites
-  if (moverDireita) {
-    x += vel;  
-    if (x >= limiteDireita) {  // Inverte a direção quando atinge o limite direito
-      moverDireita = false;
-      moverEsquerda = true;
+    if (moverDireita) {
+      x += vel;
+      if (x >= limiteDireita) {  // Inverte a direção quando atinge o limite direito
+        moverDireita = false;
+        moverEsquerda = true;
+      }
+    } else if (moverEsquerda) {
+      x -= vel;
+      if (x <= limiteEsquerda) {  // Inverte a direção quando atinge o limite esquerdo
+        moverEsquerda = false;
+        moverDireita = true;
+      }
     }
-  } else if (moverEsquerda) {
-    x -= vel;  
-    if (x <= limiteEsquerda) {  // Inverte a direção quando atinge o limite esquerdo
-      moverEsquerda = false;
-      moverDireita = true;
-    }
-  }
 
     // Atualiza hitbox do Redbot
     left = x - 15;

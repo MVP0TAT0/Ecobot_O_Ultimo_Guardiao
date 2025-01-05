@@ -18,7 +18,7 @@ class Tronco {
   }
 
   void desenha() {
-    // Desenho por ChatGPT, com ajustes de x e y por nós
+    // Desenho por ChatGPT, com ajustes por nós
 
     // Desenho do tronco
     fill(cor1);
@@ -56,9 +56,9 @@ class Tronco {
       oEcobot.left < right) {
 
       // Permitir que o Ecobot esteja sobre o tronco apenas se não estiver a saltar
-      if (!oEcobot.aSaltar) {
-        oEcobot.aCair = false; // Impedir queda
-        oEcobot.y = top - 68 / 2; // Ajustar a posição sobre o tronco
+      if (!oEcobot.aSaltar) {  // Se não está a saltar...
+        oEcobot.aCair = false; // ...para de cair
+        oEcobot.y = top - 68 / 2; // Ajustar a posição do Ecobot
       }
       return; // Evitar outras verificações de colisão
     }
