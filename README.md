@@ -1,4 +1,4 @@
-**Projeto final de Programação 2024/25**
+# Projeto final de Programação 2024/25
 
 A floresta que sustenta o equilíbrio do planeta está em perigo devido à acumulação de lixo e ao descuido com
 a natureza. Como último recurso, cientistas desenvolveram o EcoBot, um robô especializado em revitalizar o
@@ -9,7 +9,7 @@ por poluição. A missão é limpar esta floresta apanhando o lixo espalhado enq
 obstáculos naturais. Com energia limitada e desafios crescentes, o objetivo é limpar a maior quantidade possível
 de lixo antes que a energia do EcoBot acabe.
 
-Requisitos:
+# Requisitos
 
 1. **Apanhar lixo:** O EcoBot deve passar sobre itens de lixo espalhados pelo mapa de modo a apanhá-
 los e ganhar pontos. O utilizador controla o movimento do EcoBot através das teclas de direção.
